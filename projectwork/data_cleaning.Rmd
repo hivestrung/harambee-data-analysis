@@ -1,11 +1,11 @@
 ---
-title: "iX Project - Shiv"
+title: "iX Project - Group 2 - Q1(b)"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "/Users/shiv/Desktop/iX/ix_cape_town_2019_project")
+knitr::opts_knit$set(root.dir = "/Users/xiaojianzhou/Documents/4. GitHub/harambee-data-analysis/projectwork")
 library(tidyverse)
 library(lubridate)
 library(hablar)
@@ -24,7 +24,6 @@ Build a machine learning model to:
 
 # Import the data
 ```{r, echo=FALSE}
-setwd("~/Documents/4. GitHub/harambee-data-analysis")
 data <- read_csv("data/raw/teaching_training_data.csv") %>% select(-X1)
 cft <- read.csv("data/raw/teaching_training_data_cft.csv") %>% select(-X)
 com <- read.csv("data/raw/teaching_training_data_com.csv") %>% select(-X)
@@ -206,8 +205,10 @@ Visualise the relation between numearnincome and peoplelive
 ggplot(data.work, aes(x=numearnincome, y=peoplelive)) + geom_point() + geom_count() + geom_abline(slope=1, intercept=-1)+scale_size_continuous(range = c(1, 8))
 ```
 We will assume whether numearnincome include self or not by taking the most commonly used interpretation of the survey respondents.
-a = People who definitely assumed that numearnincome does not include self = people indicating 0 numearnincome
-b = People who definitely assumed that numearnincome include self = numearnincome exceeds peoplelive by 1 (people who lies on the line y=x-1 shown above)
+a = People who definitely assumed that numearnincome does not include self = people indicating 0 numearnincome.
+
+b = People who definitely assumed that numearnincome include self = numearnincome exceeds peoplelive by 1 (people who lies on the line y=x-1 shown above).
+
 From graph, a>b.
 
 Hence we should assume that numearnincome does not include self and correct the data by deducting 1 from b's numearnincome.
@@ -353,9 +354,6 @@ data.work.merged[,cols] <- lapply(data.work.merged[,cols],as.factor)
 
 ```{r}
 tempData <- mice(data.work.merged,m=5, meth='pmm',seed=500, maxit=2)
-summary(tempData)
-
-tempData$imp$fin_situ_future
 
 data.work.imp <- complete(tempData,1)
 ```
@@ -527,7 +525,7 @@ Kappa : 0.1234
 Sensitivity : 0.5644
 Specificity : 0.5592
 
-#Conclusions
+# Conclusions
 1. Logistic regression is the best model with the following statistics
 Accuracy : 0.596
 Kappa : 0.185
@@ -538,4 +536,4 @@ Specificity : 0.4977
 
 # Further explorations
 1. Explore cleaning the data differently
-2. Try ensamble and deep learning
+2. Try ensamble or deep learning
