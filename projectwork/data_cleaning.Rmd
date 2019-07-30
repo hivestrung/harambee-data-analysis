@@ -467,12 +467,9 @@ daysWorked against numchildren
 ```{r}
 
 df3_numchildren = group_by(df2, numchildren) %>% count(moreThanSixMths) %>% group_by(numchildren) %>% mutate(percent = n/sum(n))
-ggplot(df3, aes(y = percent, x = numchildren, fill = moreThanSixMths)) + geom_bar(stat="identity")
+ggplot(df3_numchildren, aes(y = percent, x = numchildren, fill = moreThanSixMths)) + geom_bar(stat="identity")
 ```
 
-```{r}
-
-```
 
 
 ```{r}
