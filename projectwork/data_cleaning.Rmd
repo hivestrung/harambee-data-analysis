@@ -473,9 +473,11 @@ ggplot(df3_numchildren, aes(y = percent, x = numchildren, fill = moreThanSixMths
 
 
 ```{r}
-df3_numearnincome = group_by(df2, numearnincome) %>% count(moreThanSixMths) %>% group_by(numearnincome) %>% mutate(percent = n)
+df3_numearnincome = group_by(df2, numearnincome) %>% count(moreThanSixMths) %>% group_by(numearnincome) %>% mutate(percent = n/sum(n))
+df3_numearnincome
 ggplot(df3_numearnincome, aes(y = percent, x = numearnincome, fill = moreThanSixMths)) + geom_bar(stat="identity")
 ```
+
 
 ```{r}
 df3_mean_num_score = group_by(df2, mean_num_score) %>% count(moreThanSixMths) %>% group_by(mean_num_score) %>% mutate(percent = n/sum(n))
@@ -588,9 +590,14 @@ Accuracy : 0.596
 Kappa : 0.185
 Sensitivity : 0.6860
 Specificity : 0.4977
-2. Significant variables include company_size, volunteer, leadershiprole, numchildren, numearnincome, age_at_survey, mean_num_score
-3. Better data collection
+2. Significant variables include company_size, volunteer, leadershiprole, numchildren, numearnincome, age_at_survey, mean_num_score.
+3. Age and possibly hence work experience is key in gaining long term employment.
+3. Urgency/need for employment is less important than individual's ability to commit to the job when it comes to whether they can gain employment long term.
+4. More rigorous data collection process.
 
 # Further explorations
 1. Explore cleaning the data differently
 2. Try ensamble or deep learning
+3. Investigate correlations between parameters
+4. Upsampling
+5. Hypothesis testing (sign testing)
