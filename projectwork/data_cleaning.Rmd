@@ -190,8 +190,8 @@ Assume that:
 
 ```{r}
 data.work$givemoney_yes = ifelse(is.na(data.work$givemoney_yes), FALSE, data.work$givemoney_yes)
-data.work$volunteer = ifelse(is.na(data.work$volunteer), FALSE, data.work$volunteer)
-data.work$leadershiprole = ifelse(is.na(data.work$leadershiprole), FALSE, data.work$leadershiprole)
+data.work$volunteer = ifelse(is.na(data.work$volunteer), "No", data.work$volunteer)
+data.work$leadershiprole = ifelse(is.na(data.work$leadershiprole), "No", data.work$leadershiprole)
 data.work$anygrant = ifelse(is.na(data.work$anygrant), FALSE, data.work$anygrant)
 
 data.work$peoplelive = ifelse(is.na(data.work$peoplelive), 0, data.work$peoplelive)
@@ -451,6 +451,32 @@ Accuracy : 0.596
 Kappa : 0.185
 Sensitivity : 0.6860
 Specificity : 0.4977
+
+Plotting to see relations between statistically significant variables and daysWorked
+```{r}
+df2 = data.work.imp
+```
+
+daysWorked against age_at_survey
+```{r}
+ggplot(df2, aes(y=daysWorked, x=age_at_survey)) + geom_point() + geom_count()
+```
+
+daysWorked against numchildren
+```{r}
+ggplot(df2, aes(y=daysWorked, x=numchildren)) + geom_point() + geom_count()
+```
+
+
+```{r}
+ggplot(df2, aes(y=daysWorked, x=mean_num_score)) + geom_point() + geom_count()
+```
+
+
+```{r}
+ggplot(df2, aes(y=daysWorked, x=company_size)) + geom_point() + geom_count()
+```
+
 
 
 ## performing decision tree
