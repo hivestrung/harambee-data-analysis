@@ -507,7 +507,9 @@ ggplot(df3_volunteer, aes(y = percent, x = volunteer, fill = moreThanSixMths)) +
 ```
 age at survey
 ```{r}
-df3_ageatsurvey = ggplot(df2, aes(y=daysWorked, x=mean_num_score)) + geom_point() + geom_count()
+df3_age_at_survey = group_by(df2, age_at_survey) %>% count(moreThanSixMths) %>% group_by(age_at_survey) %>% mutate(percent = n/sum(n))
+df3_age_at_survey = filter(df3_age_at_survey, moreThanSixMths == T)
+ggplot(df3_age_at_survey, aes(y = percent, x = age_at_survey, fill = moreThanSixMths)) + geom_bar(stat="identity")
 ```
 
 
