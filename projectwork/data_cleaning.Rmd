@@ -5,7 +5,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "/Users/xiaojianzhou/Documents/4. GitHub/harambee-data-analysis/projectwork")
+knitr::opts_knit$set(root.dir = "/Users/shiv/Desktop/iX/ix_cape_town_2019_project")
 library(tidyverse)
 library(lubridate)
 library(hablar)
@@ -14,6 +14,7 @@ library(mice)
 library(party)
 library(partykit)
 library(rattle)
+library(dplyr)
 ```
 
 Wiki: https://github.com/neilrankinza/ix_cape_town_2019_project/wiki
@@ -24,12 +25,12 @@ Build a machine learning model to:
 
 # Import the data
 ```{r, echo=FALSE}
-data <- read_csv("data/raw/teaching_training_data.csv") %>% select(-X1)
-cft <- read.csv("data/raw/teaching_training_data_cft.csv") %>% select(-X)
-com <- read.csv("data/raw/teaching_training_data_com.csv") %>% select(-X)
-grit <- read.csv("data/raw/teaching_training_data_grit.csv") %>% select(-X)
-num <- read.csv("data/raw/teaching_training_data_num.csv") %>% select(-X)
-opt <- read.csv("data/raw/teaching_training_data_opt.csv") %>% select(-X)
+data <- read_csv("projectwork/data/raw/teaching_training_data.csv") %>% select(-X1)
+cft <- read.csv("projectwork/data/raw/teaching_training_data_cft.csv") %>% select(-X)
+com <- read.csv("projectwork/data/raw/teaching_training_data_com.csv") %>% select(-X)
+grit <- read.csv("projectwork/data/raw/teaching_training_data_grit.csv") %>% select(-X)
+num <- read.csv("projectwork/data/raw/teaching_training_data_num.csv") %>% select(-X)
+opt <- read.csv("projectwork/data/raw/teaching_training_data_opt.csv") %>% select(-X)
 ```
 
 # Understand the data
@@ -464,7 +465,13 @@ ggplot(df2, aes(y=daysWorked, x=age_at_survey)) + geom_point() + geom_count()
 
 daysWorked against numchildren
 ```{r}
-ggplot(df2, aes(y=daysWorked, x=numchildren)) + geom_point() + geom_count()
+
+df3_numchildren = group_by(df2, numchildren) %>% count(moreThanSixMths) %>% group_by(numchildren) %>% mutate(percent = n/sum(n))
+ggplot(df3, aes(y = percent, x = numchildren, fill = moreThanSixMths)) + geom_bar(stat="identity")
+```
+
+```{r}
+
 ```
 
 
@@ -474,11 +481,19 @@ ggplot(df2, aes(y=daysWorked, x=mean_num_score)) + geom_point() + geom_count()
 
 
 ```{r}
-ggplot(df2, aes(y=daysWorked, x=company_size)) + geom_point() + geom_count()
+df3_company_size = group_by(df2, company_size) %>% count(moreThanSixMths) %>% group_by(company_size) %>% mutate(percent = n/sum(n))
+ggplot(df3_company_size, aes(y = percent, x = company_size, fill = moreThanSixMths)) + geom_bar(stat="identity")
 ```
 
+```{r}
+df3_leadershiprole = group_by(df2, leadershiprole) %>% count(moreThanSixMths) %>% group_by(leadershiprole) %>% mutate(percent = n/sum(n))
+ggplot(df3_leadershiprole, aes(y = percent, x = leadershiprole, fill = moreThanSixMths)) + geom_bar(stat="identity")
+```
 
-
+```{r}
+df3_volunteer = group_by(df2, volunteer) %>% count(moreThanSixMths) %>% group_by(volunteer) %>% mutate(percent = n/sum(n))
+ggplot(df3_volunteer, aes(y = percent, x = volunteer, fill = moreThanSixMths)) + geom_bar(stat="identity")
+```
 ## performing decision tree
 
 ```{r}
