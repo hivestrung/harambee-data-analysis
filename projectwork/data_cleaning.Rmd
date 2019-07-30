@@ -476,6 +476,17 @@ ggplot(df3, aes(y = percent, x = numchildren, fill = moreThanSixMths)) + geom_ba
 
 
 ```{r}
+df3_numearnincome = group_by(df2, numearnincome) %>% count(moreThanSixMths) %>% group_by(numearnincome) %>% mutate(percent = n)
+ggplot(df3_numearnincome, aes(y = percent, x = numearnincome, fill = moreThanSixMths)) + geom_bar(stat="identity")
+```
+
+```{r}
+df3_mean_num_score = group_by(df2, mean_num_score) %>% count(moreThanSixMths) %>% group_by(mean_num_score) %>% mutate(percent = n/sum(n))
+ggplot(df3_mean_num_score, aes(y = percent, x = mean_num_score, fill = moreThanSixMths)) + geom_bar(stat="identity")
+```
+
+
+```{r}
 ggplot(df2, aes(y=daysWorked, x=mean_num_score)) + geom_point() + geom_count()
 ```
 
@@ -494,6 +505,12 @@ ggplot(df3_leadershiprole, aes(y = percent, x = leadershiprole, fill = moreThanS
 df3_volunteer = group_by(df2, volunteer) %>% count(moreThanSixMths) %>% group_by(volunteer) %>% mutate(percent = n/sum(n))
 ggplot(df3_volunteer, aes(y = percent, x = volunteer, fill = moreThanSixMths)) + geom_bar(stat="identity")
 ```
+age at survey
+```{r}
+df3_ageatsurvey = ggplot(df2, aes(y=daysWorked, x=mean_num_score)) + geom_point() + geom_count()
+```
+
+
 ## performing decision tree
 
 ```{r}
